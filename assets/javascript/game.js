@@ -1,60 +1,79 @@
- // This function is run whenever the user presses a key.
- document.onkeyup = function(event) {
+$(document).ready(function () {
+  var losses = 0;
+  var CrystalSum = 0;
+  var wins = 0;
+  $("#wins").html(wins);
+  $("#losses").html(losses);
+  $("#playerNumbo").html(CrystalSum);
 
-    // Determines which key was pressed.
-    var userGuess = event.key;
+  function randomNumberGenerator(range) {
+    return Math.round((Math.random() * range) + 1);
+  }
 
-    if (["r", "e", "g","o","l","i","t","h"].includes(userGuess)) {
-     else if (userGuess === 'a') 
-        wins++;
+  function rando() {
+    var num = randomNumberGenerator(100);
+    while (num <= 9) {
+      num = randomNumberGenerator(100);
     }
+    return num;
+  }
 
-      // Randomly chooses a choice from the options array. This is the Computer's guess.
+  function resetGame() {
+    CrystalSum = 0;
+    $("#playerNumbo").html(CrystalSum);
+    unusualGemValue = randomNumberGenerator(10);
+    kyberValue = randomNumberGenerator(10);
+    dark_crystalValue = randomNumberGenerator(10);
+    homerValue = randomNumberGenerator(10);
+    randoSeed = rando();
+    return $("#rando").html(randoSeed);
+  }
+  var randoSeed = rando();
+  $("#rando").html(randoSeed);
 
-      // Alerts the key the user pressed (userGuess).
-      console.log("User guess: " + userGuess);
-
-              //https://en.wikipedia.org/wiki/Selene
-              //albedo
-              //https://en.wikipedia.org/wiki/Lunar_Roving_Vehicle
-              //perigee
-              //http://www.spudislunarresources.com/moon101/moon_101_intro.pdf
-              //https://gizmodo.com/scientists-just-found-the-perfect-spot-to-build-an-unde-1819658831
-
-      if (userGuess === computerGuess) {
-        ties++;
-      } else if (userGuess === 'a') {
-        wins++;
-      } else if (userGuess === 'p' && computerGuess === 'r') {
-        wins++;
-      } else if (userGuess === 's' && computerGuess === 'p') {
-        wins++;
-      } else {
-        losses++;
-      }
-
-              
-
-      gameStatus.innerHTML = `
-      <p>You chose: ${userGuess}</p>
-      <p>Computer chose: ${computerGuess}</p>
-      <p>wins: ${wins}</p>
-      <p>losses: ${losses}</p>
-      <p>ties: ${ties}</p>
-      `;}
-
-// We can either overwrite each element of the array to make it lowercase, or we can use the toLowerCase() method.
-
-
-logArray(drinks) //-> Logs array
-
-      
-
-// If the first character in the current animal is "c" or "o", alert the following message.
-if (myFarm[j].charAt(0) === "c" || myFarm[j].charAt(0) === "o") {
-        alert("Starts with a c or an o!");
-      }
+  function GameCompleteCheck() {
+    if (CrystalSum === randoSeed) {
+      wins++;
+      $("#wins").html(wins)
+      alert("Boom Goes The Crystal!");
+      return resetGame();
+    } else if (CrystalSum > randoSeed) {
+      losses++;
+      $("#losses").html(losses)
+      alert("ADVANCED DARKNESS!");
+      return resetGame();
     }
+  }
 
-  };
-</script>
+  var unusualGemValue = randomNumberGenerator(10);
+  $("#unusualGem").on("click", function () {
+    CrystalSum += unusualGemValue;
+    $("#playerNumbo").html(CrystalSum);
+    GameCompleteCheck();
+    return CrystalSum;
+  });
+
+  var kyberValue = randomNumberGenerator(10);
+  $("#kyber").on("click", function () {
+    CrystalSum += kyberValue;
+    $("#playerNumbo").html(CrystalSum);
+    GameCompleteCheck();
+    return CrystalSum;
+  });
+
+  var dark_crystalValue = randomNumberGenerator(10);
+  $("#dark_crystal").on("click", function () {
+    CrystalSum += dark_crystalValue;
+    $("#playerNumbo").html(CrystalSum);
+    GameCompleteCheck();
+    return CrystalSum;
+  });
+
+  var homerValue = randomNumberGenerator(10);
+  $("#homer").on("click", function () {
+    CrystalSum += homerValue;
+    $("#playerNumbo").html(CrystalSum);
+    GameCompleteCheck();
+    return CrystalSum;
+  });
+});
